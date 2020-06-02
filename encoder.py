@@ -2,12 +2,12 @@ import torch
 from transformers import ElectraModel, ElectraTokenizer
 
 
-class Encoder():
+class Encoder:
 	"""KoELELCTRA Encoder class"""
-	def __init__():
+	def __init__(model_size: str):
 		self.dimension = 256
-		self.model = ElectraModel.from_pretrained("monologg/koelectra-small-discriminator")
-		self.tokenizer = ElectraTokenizer.from_pretrained("monologg/koelectra-small-discriminator")
+		self.model = ElectraModel.from_pretrained(f"monologg/koelectra-{model_size}-discriminator")
+		self.tokenizer = ElectraTokenizer.from_pretrained(f"monologg/koelectra-{model_size}-discriminator")
 
 	def encode(sent: str):
 		tokens = self.tokenizer.tokenize(f"[CLS] {sent} [SEP]")

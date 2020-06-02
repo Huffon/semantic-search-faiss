@@ -5,7 +5,7 @@ import faiss
 OUTPUT_DIR = "output"
 
 
-def search(encoder, query: str, k: int=1):
+def search(encoder, indices, query: str, k: int=1):
 	"""Conduct top-k search"""
 	query_vec = encoder.encode(query)
 	top_k = indices.search(query_vec, k)
