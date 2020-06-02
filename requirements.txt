@@ -1,4 +1,2 @@
 flask
 transformers
-faiss
-torch
