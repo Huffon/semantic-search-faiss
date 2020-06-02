@@ -1,0 +1,4 @@
+flask
+transformers
+faiss
+torch
