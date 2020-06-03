@@ -22,20 +22,21 @@ def load_dataset(f_input: str):
         return lines
 
 
-def es_search(es, index: str, query: str):
+def es_search(es, index: str, query: str, k: int=3):
     """Conduct ElasticSearch's search"""
     results = es.search(
         index=index,
         body={
             "from": 0,
-            "size": 3,
+            "size": k,
             "query": {
                 "match": {
-                    "field": "title"
+                    "title": query
                 }
             }
         }
     )
+    results = [result["_source"]["title"] for result in results["hits"]["hits"]]
     return results
 
 
@@ -43,16 +44,13 @@ def create_es_index(es, index: str):
     """Create ElasticSearch indices"""
     if not es.indices.exists(index=index):
         es.indices.create(
-            index="test",
+            index=index,
             body={
                 "settings": {
-                    "index": {
-                        "analysis": {
-                            "analyzer": {
-                                "my_analyzer": {
-                                    "type": "custom",
-                                    "tokenizer": "nori_tokenizer"
-                                }
+                    "analysis": {
+                        "analyzer": {
+                            "nori": {
+                                "tokenizer": "nori_tokenizer"
                             }
                         }
                     }
@@ -64,7 +62,7 @@ def create_es_index(es, index: str):
                         },
                         "title": {
                             "type": "text",
-                            "analyzer": "my_analyzer"
+                            "analyzer": "nori"
                         }
                     }
                 }
@@ -73,18 +71,15 @@ def create_es_index(es, index: str):
 
         with open("corpus.json", encoding="utf-8") as corpus:
             dataset = json.loads(corpus.read())
-            body = ""
             for data in dataset:
                 doc = {
                     "id": data["id"],
-                    "title": data["title"]
+                    "title": normalize(data["title"])
                 }
-                print(doc)
                 res = es.index(index=index, body=doc)
-                print(res)
 
 
-def faiss_search(encoder, indices, query: str, k: int = 3):
+def faiss_search(encoder, indices, query: str, k: int=3):
     """Conduct FAISS top-k search"""
     query_vec = encoder.encode(query)
     top_k = indices.search(query_vec, k)[-1].tolist()[0]

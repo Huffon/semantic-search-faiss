@@ -43,13 +43,13 @@ sudo ./bin/elasticsearch-plugin install analysis-nori
 - Flask API 서버 실행을 위해 다음 코드를 실행합니다:
 
 ```bash
-gunicorn server:app --bind=0.0.0.0:8018 -w 4
+python server.py
 ```
 
 - 인퍼런스를 위해 다음 코드를 실행합니다:
 
 ```bash
-http -v POST localhost:8018/search query="코로나 바이러스"
+http -v POST localhost:5000/search query="코로나 바이러스"
 ```
 
 <br/>
@@ -59,3 +59,4 @@ http -v POST localhost:8018/search query="코로나 바이러스"
 - [KoELECTRA](https://github.com/monologg/KoELECTRA)
 - [How we used Universal Sentence Encoder and FAISS to make our search 10x smarter](https://blog.onebar.io/building-a-semantic-search-engine-using-open-source-components-e15af5ed7885)
 - [Python, Django, Elasticsearch를 사용해서 검색엔진 구축하기](https://blog.nerdfactory.ai/2019/04/29/django-elasticsearch-restframework.html)
+- [[ElasticSearch][Python] 데이터넣고 검색하기](http://blog.naver.com/PostView.nhn?blogId=wideeyed&logNo=221494109911)

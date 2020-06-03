@@ -5,8 +5,10 @@ from app.encoder import Encoder
 from app.utils import create_es_index, create_faiss_index, es_search, faiss_search
 
 
+index_name = "news"
+
 es = Elasticsearch(["localhost:9200"])
-es_indices = create_es_index(es, index="corpus")
+es_indices = create_es_index(es, index=index_name)
 
 encoder = Encoder("small")
 faiss_indices = create_faiss_index(encoder)
@@ -17,10 +19,13 @@ app = Flask(__name__)
 @app.route("/search", methods=["POST"])
 def search():
     query = request.json["query"]
-    es_result = es_search(es, "corpus", query)
-    print(es_result)
+    es_result = es_search(es, index_name, query)
     faiss_result = faiss_search(encoder, faiss_indices, query)
-    return jsonify(faiss_result)
+    result = {
+        "elastic": es_result,
+        "faiss": faiss_result,
+    }
+    return jsonify(result)
 
 
 @app.route("/")
