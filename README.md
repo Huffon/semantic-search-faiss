@@ -19,10 +19,18 @@ pip install -r requirements.txt
 
 <br/>
 
-## 실행
+## 실행 및 인퍼런스
+
+- Flask API 서버 실행을 위해 다음 코드를 실행합니다:
 
 ```bash
-python server.py
+python wsgi.py
+```
+
+- 인퍼런스를 위해 다음 코드를 실행합니다:
+
+```bash
+http -v POST localhost:5000/search query="코로나 바이러스"
 ```
 
 <br/>
