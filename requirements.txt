@@ -1,3 +1,4 @@
 flask
 transformers
 elasticsearch
+gunicorn
