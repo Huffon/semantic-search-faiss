@@ -1,12 +1,13 @@
 from elasticsearch import Elasticsearch
 
+
 es = Elasticsearch()
 
 
-def create_es_indices(es):
+def create_es_indices(es, index: str):
     """Create ElasticSearch indices"""
     es.indices.create(
-        index='dictionary',
+        index=index,
         body={
             "settings": {
                 "index": {

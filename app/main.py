@@ -1,8 +1,8 @@
 from flask import Flask, request
 from elasticsearch import Elasticsearch
 
-from app.encoder import Encoder
-from app.utils import create_es_index, create_faiss_index, es_search, faiss_search
+from encoder import Encoder
+from utils import create_es_index, create_faiss_index, es_search, faiss_search
 
 
 # es = Elasticsearch()
