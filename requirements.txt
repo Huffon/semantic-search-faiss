@@ -2,3 +2,4 @@ flask
 transformers
 elasticsearch
 gunicorn
+heroku
