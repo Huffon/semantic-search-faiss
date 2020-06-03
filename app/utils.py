@@ -76,7 +76,7 @@ def create_es_index(es, index: str):
                     "id": data["id"],
                     "title": normalize(data["title"])
                 }
-                res = es.index(index=index, body=doc)
+                es.index(index=index, body=doc)
 
 
 def faiss_search(encoder, indices, query: str, k: int=3):

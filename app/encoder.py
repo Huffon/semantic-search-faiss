@@ -19,6 +19,5 @@ class Encoder:
             tokens)).unsqueeze(0)  # batchify
         attn_masks = torch.tensor(
             [1 for _ in range(n_tokens)]).unsqueeze(0)  # batchify
-        # un-batchify and extract [CLS] token
-        last_states = self.model(indices, attn_masks)[0][:, 0, :]
+        last_states = self.model(indices, attn_masks)[0][:, 0, :]  # extract [CLS] token
         return last_states.detach().numpy()  # [1, 256]

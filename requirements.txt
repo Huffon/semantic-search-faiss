@@ -1,5 +1,3 @@
 flask
-numpy
 transformers
 elasticsearch
-gunicorn

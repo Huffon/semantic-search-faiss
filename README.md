@@ -1,23 +1,37 @@
 # FAISS를 이용한 시맨틱 서치
 
-FAISS와 ElasticSearch를 이용한 시맨틱 서치 토이 프로젝트
+`FAISS`와 `ElasticSearch`를 이용한 **시맨틱 서치** 토이 프로젝트입니다.
+
+프로젝트에 사용된 여러 라이브러리들이 **리눅스**에서만 지원되기 때문에, **리눅스** 환경에서의 실행만 테스트하였습니다.
+
+설치를 바르게 진행하셨다면 [corpus.json](corpus.json) 파일을 원하는 문장으로 수정한 후, 원하는 **시맨틱 서치** API를 만드실 수 있습니다.
 
 <br/>
 
-## 설치
+## 프로젝트 설치
 
 ```
+# 프로젝트 클론
 git clone https://github.com/Huffon/semantic-search-faiss.git
 cd semantic-search-faiss
 
+# 아나콘다 환경 생성
 conda create -n semantic-search python=3.6
 conda activate semantic-search
 
+# 프로젝트 필수 라이브러리 설치
 conda install faiss-gpu pytorch cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
 
-- ElasticSearch 사용을 위해서는 8 버전 이상의 JDK가 필요합니다.
+- `ElasticSearch`의 사용을 위해서는 **8 버전** 이상의 **JDK**가 필요합니다.
+- `ElasticSearch` 인스턴스들이 제대로 실행되지 않는 경우 **JAVA_HOME** path가 잘 설정되어 있는지 확인하셔야 합니다.
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+echo $JAVA_HOME
+>>> /usr/lib/jvm/java-11-openjdk-amd64/
+```
 
 ```
 # ElasticSearch 다운로드
@@ -31,26 +45,43 @@ cd elasticsearch
 
 # 한국어 토크나이저 Nori 설치
 sudo ./bin/elasticsearch-plugin install analysis-nori
-
-# ElasticSearch 실행
-./bin/elasticsearch/bin/elasticsearch
 ```
 
 <br/>
 
 ## 실행 및 인퍼런스
 
-- Flask API 서버 실행을 위해 다음 코드를 실행합니다:
+- `ElasticSearch`와의 통신을 위해 **ElasticSearch 클라이언트**를 실행합니다:
+
+```bash
+.elasticsearch/bin/elasticsearch/bin/elasticsearch
+```
+
+- **Flask API** 서버 실행을 위해 다음 코드를 실행합니다. 첫 실행 시에는 인덱스 생성으로 인해 _Latency_ 가 있을 수 있습니다:
 
 ```bash
 python server.py
 ```
 
-- 인퍼런스를 위해 다음 코드를 실행합니다:
+- **인퍼런스**를 위해 다음 요청을 전송합니다:
 
 ```bash
 http -v POST localhost:5000/search query="코로나 바이러스"
 ```
+
+_http는 다음 명령어를 통해 설치 가능합니다: `apt-get install httpie`_
+
+<br/>
+
+## 결과
+
+![](/img/result_a.png)
+
+- **코로나**를 입력했을 때, `ElasticSearch`와 `FAISS`가 내놓은 헤드라인입니다.
+
+![](/img/result_b.png)
+
+- **신규**를 입력했을 때, `ElasticSearch`와 `FAISS`가 내놓은 헤드라인입니다.
 
 <br/>
 

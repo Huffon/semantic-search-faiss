@@ -5,7 +5,7 @@ from app.encoder import Encoder
 from app.utils import create_es_index, create_faiss_index, es_search, faiss_search
 
 
-index_name = "news"
+index_name = "corpus"
 
 es = Elasticsearch(["localhost:9200"])
 es_indices = create_es_index(es, index=index_name)
