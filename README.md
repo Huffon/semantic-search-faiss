@@ -24,13 +24,13 @@ pip install -r requirements.txt
 - Flask API 서버 실행을 위해 다음 코드를 실행합니다:
 
 ```bash
-python wsgi.py
+gunicorn server:app --bind=0.0.0.0:8018 -w 4
 ```
 
 - 인퍼런스를 위해 다음 코드를 실행합니다:
 
 ```bash
-http -v POST localhost:5000/search query="코로나 바이러스"
+http -v POST localhost:8018/search query="코로나 바이러스"
 ```
 
 <br/>
