@@ -1,8 +1,8 @@
 from flask import Flask, request
 from elasticsearch import Elasticsearch
 
-from encoder import Encoder
-from utils import create_es_index, create_faiss_index, es_search, faiss_search
+from app.encoder import Encoder
+from app.utils import create_es_index, create_faiss_index, es_search, faiss_search
 
 
 # es = Elasticsearch()
@@ -20,6 +20,11 @@ def search():
 	# es_result = es_search(es, "corpus", query)
 	faiss_result = faiss_search(encoder, faiss_indices, query)
 	return result
+
+
+@app.route("/") 
+def index(): 
+	return "Hello FAISS !"
 
 
 if __name__ == "__main__":
