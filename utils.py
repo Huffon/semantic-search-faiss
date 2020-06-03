@@ -1,5 +1,8 @@
 import os
+import json
+
 import faiss
+import numpy as np
 
 
 OUTPUT_DIR = "output"
@@ -11,10 +14,10 @@ def normalize(sent: str):
 	return sent
 
 
-def load_dataset(input_dir: str):
+def load_dataset(f_input: str):
 	"""Load dataset from input directory"""
-	with open(input_dir, "r", encoding="utf-8") as corpus:
-		lines = [normalize(line) for line in corpus.readlines()]
+	with open(f"{f_input}.json", "r", encoding="utf-8") as corpus:
+		lines = [normalize(line["title"]) for line in json.loads(corpus.read())]
 		return lines
 
 
@@ -68,8 +71,8 @@ def create_es_index(es, index: str):
 			}
 		)
 
-		with open(f"{index}.json", encoding="utf-8") as f_in:
-			json_data = json.loads(f_in.read())
+		with open(f"{index}.json", encoding="utf-8") as corpus:
+			json_data = json.loads(corpus.read())
 			body = ""
 			for i in json_data:
 				body = body + json.dumps({"index": {"_index": "dictionary", "_type": "dictionary_datas"}}) + '\n'
@@ -95,7 +98,7 @@ def create_faiss_index(encoder):
 		)
 		return indices
 
-	dataset = load_dataset("corpus.txt")
+	dataset = load_dataset("corpus")
 	encoded = [encoder.encode(data) for data in dataset]
 
 	indices = faiss.IndexIDMap(faiss.IndexFlatIP(encoder.dimension))

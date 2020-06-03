@@ -2,6 +2,8 @@
 
 FAISS와 ElasticSearch를 이용한 시맨틱 서치 토이 프로젝트
 
+<br/>
+
 ## 설치
 
 ```
