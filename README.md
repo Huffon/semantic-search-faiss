@@ -17,6 +17,25 @@ conda install faiss-gpu pytorch cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
 
+- ElasticSearch 사용을 위해서는 8 버전 이상의 JDK가 필요합니다.
+
+```
+# ElasticSearch 다운로드
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.7.0-linux-aarch64.tar.gz
+
+# 다운로드 파일 압축 해제
+tar xvf elasticsearch-7.7.0-linux-aarch64.tar.gz
+
+# ElasticSearch 폴더로 이동
+cd elasticsearch
+
+# 한국어 토크나이저 Nori 설치
+sudo ./bin/elasticsearch-plugin install analysis-nori
+
+# ElasticSearch 실행
+./bin/elasticsearch/bin/elasticsearch
+```
+
 <br/>
 
 ## 실행 및 인퍼런스

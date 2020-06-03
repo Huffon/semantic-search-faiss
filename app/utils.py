@@ -28,10 +28,9 @@ def es_search(es, index: str, query: str):
         index=index,
         body={
             "from": 0,
-            "size": 10,
+            "size": 3,
             "query": {
                 "match": {
-                    "query": query,
                     "field": "title"
                 }
             }
@@ -44,7 +43,7 @@ def create_es_index(es, index: str):
     """Create ElasticSearch indices"""
     if not es.indices.exists(index=index):
         es.indices.create(
-            index=index,
+            index="test",
             body={
                 "settings": {
                     "index": {
@@ -72,15 +71,17 @@ def create_es_index(es, index: str):
             }
         )
 
-        with open(f"{index}.json", encoding="utf-8") as corpus:
-            json_data = json.loads(corpus.read())
+        with open("corpus.json", encoding="utf-8") as corpus:
+            dataset = json.loads(corpus.read())
             body = ""
-            for i in json_data:
-                body = body + \
-                    json.dumps(
-                        {"index": {"_index": f"{index}", "_type": "dictionary_datas"}}) + '\n'
-                body = body + json.dumps(i, ensure_ascii=False) + '\n'
-            es.bulk(body)
+            for data in dataset:
+                doc = {
+                    "id": data["id"],
+                    "title": data["title"]
+                }
+                print(doc)
+                res = es.index(index=index, body=doc)
+                print(res)
 
 
 def faiss_search(encoder, indices, query: str, k: int = 3):
