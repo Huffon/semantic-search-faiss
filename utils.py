@@ -21,8 +21,8 @@ def load_dataset(input_dir: str):
 def es_search(es, index: str, query: str):
 	"""Conduct ElasticSearch's search"""
 	results = es.search(
-		index=index, 
-		body={
+		index = index, 
+		body = {
 			"from":0, 
 			"size":10, 
 			"query": {
@@ -37,47 +37,44 @@ def es_search(es, index: str, query: str):
 
 
 def create_es_index(es, index: str):
-    """Create ElasticSearch indices"""
-    if not es.indices.exists(index=index): 
-	    es.indices.create(
-	        index=index,
-	        body={
-	            "settings": {
-	                "index": {
-	                    "analysis": {
-	                        "analyzer": {
-	                            "my_analyzer": {
-	                                "type": "custom",
-	                                "tokenizer": "nori_tokenizer"
-	                            }
-	                        }
-	                    }
-	                }
-	            },
-	            "mappings": {
+	"""Create ElasticSearch indices"""
+	if not es.indices.exists(index=index): 
+		es.indices.create(
+			index = index,
+			body = {
+				"settings": {
+					"index": {
+						"analysis": {
+							"analyzer": {
+								"my_analyzer": {
+									"type": "custom",
+									"tokenizer": "nori_tokenizer"
+								}
+							}
+						}
+					}
+				},
+				"mappings": {
 					"properties": {
-	                	"id": {
-	                    	"type": "long"
-	                    },
+						"id": {
+							"type": "long"
+						},
 						"title": {
 							"type": "text",
-	                        "analyzer": "my_analyzer"
-	                    }
-	                }
-	            }
-	        }
-	    )
+							"analyzer": "my_analyzer"
+						}
+					}
+				}
+			}
+		)
 
-	    with open(f"{index}.json", encoding="utf-8") as f_in:
-    		json_data = json.loads(f_in.read())
-
-		body = ""
-
-		for i in json_data:
-    		body = body + json.dumps({"index": {"_index": "dictionary", "_type": "dictionary_datas"}}) + '\n'
-    		body = body + json.dumps(i, ensure_ascii=False) + '\n'
-
-		es.bulk(body)
+		with open(f"{index}.json", encoding="utf-8") as f_in:
+			json_data = json.loads(f_in.read())
+			body = ""
+			for i in json_data:
+				body = body + json.dumps({"index": {"_index": "dictionary", "_type": "dictionary_datas"}}) + '\n'
+				body = body + json.dumps(i, ensure_ascii=False) + '\n'
+			es.bulk(body)
 
 
 def faiss_search(encoder, indices, query: str, k: int=1):

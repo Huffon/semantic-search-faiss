@@ -1,16 +1,17 @@
 # FAISS를 이용한 시맨틱 서치
 
+FAISS와 ElasticSearch를 이용한 시맨틱 서치 토이 프로젝트
+
 ## 설치
 
 ```
 git clone https://github.com/Huffon/semantic-search-faiss.git
 cd semantic-search-faiss
 
-conda create -n semantic-search python=3.7
+conda create -n semantic-search python=3.6
 conda activate semantic-search
 
-conda install faiss-gpu cudatoolkit=10.0 -c pytorch
-conda install pytorch -c pytorch
+conda install faiss-gpu pytorch cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
 
