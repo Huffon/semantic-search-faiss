@@ -75,7 +75,7 @@ def create_es_index(es, index: str):
 			json_data = json.loads(corpus.read())
 			body = ""
 			for i in json_data:
-				body = body + json.dumps({"index": {"_index": "dictionary", "_type": "dictionary_datas"}}) + '\n'
+				body = body + json.dumps({"index": {"_index": f"{index}", "_type": "dictionary_datas"}}) + '\n'
 				body = body + json.dumps(i, ensure_ascii=False) + '\n'
 			es.bulk(body)
 
@@ -92,6 +92,9 @@ def faiss_search(encoder, indices, query: str, k: int=1):
 
 def create_faiss_index(encoder):
 	"""Create FAISS indices using encoder"""
+	if not os.path.exists(OUTPUT_DIR):
+		os.makedirs(OUTPUT_DIR)
+
 	if os.path.exists(f"{OUTPUT_DIR}/faiss.index"):
 		indices = faiss.read_index(
 	    	os.path.join(OUTPUT_DIR, "faiss.index")
@@ -100,6 +103,7 @@ def create_faiss_index(encoder):
 
 	dataset = load_dataset("corpus")
 	encoded = [encoder.encode(data) for data in dataset]
+	encoded = np.array(encoded)
 
 	indices = faiss.IndexIDMap(faiss.IndexFlatIP(encoder.dimension))
 	indices.add_with_ids(encoded, np.array(range(len(dataset))))
