@@ -10,8 +10,12 @@ OUTPUT_DIR = "output"
 
 def normalize(sent: str):
     """Normalize sentence"""
-    sent = sent.replace("\n", "")
-    return sent
+    sent = sent.replace('“', '"')
+    sent = sent.replace('”', '"')
+    sent = sent.replace('’', "'")
+    sent = sent.replace('‘', "'")
+    sent = sent.replace('—', '-')
+    return sent.replace("\n", "")
 
 
 def load_dataset(f_input: str):
@@ -57,9 +61,6 @@ def create_es_index(es, index: str):
                 },
                 "mappings": {
                     "properties": {
-                        "id": {
-                            "type": "long"
-                        },
                         "title": {
                             "type": "text",
                             "analyzer": "nori"
@@ -69,14 +70,13 @@ def create_es_index(es, index: str):
             }
         )
 
-        with open("corpus.json", encoding="utf-8") as corpus:
-            dataset = json.loads(corpus.read())
-            for data in dataset:
-                doc = {
-                    "id": data["id"],
-                    "title": normalize(data["title"])
-                }
-                es.index(index=index, body=doc)
+        dataset = load_dataset("corpus")
+
+        for data in dataset:
+            doc = {
+                "title": normalize(data)
+            }
+            es.index(index=index, body=doc)
 
 
 def faiss_search(encoder, indices, query: str, k: int=3):

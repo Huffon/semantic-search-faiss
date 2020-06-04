@@ -10,7 +10,7 @@ index_name = "corpus"
 es = Elasticsearch(["localhost:9200"])
 es_indices = create_es_index(es, index=index_name)
 
-encoder = Encoder("small")
+encoder = Encoder("small", dimension=256)
 faiss_indices = create_faiss_index(encoder)
 
 app = Flask(__name__)

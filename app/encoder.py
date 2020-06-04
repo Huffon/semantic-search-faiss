@@ -5,12 +5,12 @@ from transformers import ElectraModel, ElectraTokenizer
 class Encoder:
     """KoELELCTRA Encoder class"""
 
-    def __init__(self, model_size: str):
-        self.dimension = 256
+    def __init__(self, model_size: str, dimension: int):
         self.model = ElectraModel.from_pretrained(
             f"monologg/koelectra-{model_size}-discriminator")
         self.tokenizer = ElectraTokenizer.from_pretrained(
             f"monologg/koelectra-{model_size}-discriminator")
+        self.dimension = dimension
 
     def encode(self, sent: str):
         tokens = self.tokenizer.tokenize(f"[CLS] {sent} [SEP]")
