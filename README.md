@@ -42,10 +42,10 @@ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.7.0-li
 tar xvf elasticsearch-7.7.0-linux-aarch64.tar.gz
 
 # ElasticSearch 폴더로 이동
-cd elasticsearch
+cd elasticsearch-7.7.0/bin
 
 # 한국어 토크나이저 Nori 설치
-sudo ./bin/elasticsearch-plugin install analysis-nori
+sudo ./elasticsearch-plugin install analysis-nori
 ```
 
 <br/>
@@ -56,7 +56,7 @@ sudo ./bin/elasticsearch-plugin install analysis-nori
 	- _cf. `ElasticSearch`는 기본적으로 **9200**번 포트를 사용하기 때문에 포트 충돌이 일어나지 않도록 주의합니다._
 
 ```bash
-./elasticsearch/bin/elasticsearch/bin/elasticsearch
+./elasticsearch-7.7.0/bin/elasticsearch
 ```
 
 - **Flask API** 서버 실행을 위해 다음 코드를 실행합니다. 첫 실행 시에는 **인덱스 생성**으로 인한 _Latency_ 가 있을 수 있습니다:
