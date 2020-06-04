@@ -87,6 +87,15 @@ _cf. **http**는 다음 명령어를 통해 설치 가능합니다: `apt-get ins
 
 <br/>
 
+## TODO
+
+- [ ] [**FastAPI**](https://github.com/tiangolo/fastapi) 적용
+- [ ] **한국어 문장 임베딩 모델** Fine-tuning 후, 갈아 끼우기
+- [ ] **유저 인터페이스** 적용
+- [ ] **도커라이즈**
+
+<br/>
+
 ## 참조
 - [FAISS](https://github.com/facebookresearch/faiss)
 - [KoELECTRA](https://github.com/monologg/KoELECTRA)
