@@ -2,9 +2,9 @@
 
 `FAISS`와 `ElasticSearch`를 이용한 **시맨틱 서치** 토이 프로젝트입니다.
 
-프로젝트에 사용된 여러 라이브러리들이 **리눅스**에서만 지원되기 때문에, **리눅스** 환경에서의 실행만 테스트하였습니다.
+프로젝트에 사용된 여러 라이브러리들이 **리눅스**에서만 지원되기 때문에, **리눅스** 환경에서의 실행만 테스트되었습니다.
 
-설치를 바르게 진행하셨다면 [_corpus.json_](corpus.json) 파일을 원하는 문장으로 수정한 후, 커스텀 **시맨틱 서치** API를 만드실 수 있습니다.
+설치를 바르게 진행하셨다면 [_corpus.json_](corpus.json) 파일을 원하는 문장으로 채운 후, 커스텀 **시맨틱 서치** API를 만들어 보실 수 있습니다.
 
 <br/>
 
@@ -32,7 +32,7 @@ echo $JAVA_HOME
 >>> /usr/lib/jvm/java-11-openjdk-amd64/
 ```
 
-- `ElasticSearch` 인스턴스들이 제대로 실행되지 않는 경우 **JAVA_HOME** path가 잘 설정되어 있는지 확인하셔야 합니다.
+- `ElasticSearch` 인스턴스가 제대로 실행되지 않는 경우, **JAVA_HOME** _path_ 가 잘 설정되어 있는지 확인하셔야 합니다.
 
 ```
 # ElasticSearch 다운로드
@@ -53,7 +53,7 @@ sudo ./bin/elasticsearch-plugin install analysis-nori
 ## 실행 및 인퍼런스
 
 - `ElasticSearch`와의 통신을 위해 **ElasticSearch 클라이언트**를 실행합니다:
-	- _cf. `ElasticSearch`는 기본적으로 **9200** 포트를 사용하기 때문에 포트 충돌이 일어나지 않도록 주의합니다._
+	- _cf. `ElasticSearch`는 기본적으로 **9200**번 포트를 사용하기 때문에 포트 충돌이 일어나지 않도록 주의합니다._
 
 ```bash
 ./elasticsearch/bin/elasticsearch/bin/elasticsearch
@@ -71,7 +71,7 @@ python server.py
 http -v POST localhost:5000/search query="코로나"
 ```
 
-_cf. http는 다음 명령어를 통해 설치 가능합니다: `apt-get install httpie`_
+_cf. **http**는 다음 명령어를 통해 설치 가능합니다: `apt-get install httpie`_
 
 <br/>
 
